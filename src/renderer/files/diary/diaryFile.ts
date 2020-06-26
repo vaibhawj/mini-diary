@@ -5,7 +5,7 @@ import { Metadata } from "../../types";
 import { createDate } from "../../utils/dateFormat";
 import { loadDirPref } from "../preferences/preferences";
 
-export const FILE_NAME = "mini-diary.txt";
+export const FILE_NAME = "mini-diary-dev1.txt";
 const METADATA = {
 	application: remote.app.name,
 	version: remote.app.getVersion(),

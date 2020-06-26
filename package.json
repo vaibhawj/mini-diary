@@ -53,6 +53,7 @@
 		"@types/react-redux": "^7.1.9",
 		"@types/redux-logger": "^3.0.7",
 		"@types/semver": "^7.2.0",
+		"@types/uuid": "^8.0.0",
 		"draft-js": "^0.11.5",
 		"draft-js-list-plugin": "^1.0.2",
 		"draft-js-plugins-editor": "^3.0.0",

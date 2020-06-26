@@ -11,6 +11,8 @@ import {
 	SetDateSelectedAction,
 	SetSearchKeyAction,
 	SetSearchResultsAction,
+	SET_ENTRY_SELECTED,
+	SetEntrySelectedAction,
 } from "./types";
 
 // Action creators
@@ -26,6 +28,16 @@ export function setDateSelected(dateSelected: Moment): SetDateSelectedAction {
 		type: SET_DATE_SELECTED,
 		payload: {
 			dateSelected: dateValidated,
+		},
+	};
+}
+
+export function setEntrySelected(id: string, dateSelected: Moment | null = null): SetEntrySelectedAction {
+	return {
+		type: SET_ENTRY_SELECTED,
+		payload: {
+			id,
+			dateSelected
 		},
 	};
 }

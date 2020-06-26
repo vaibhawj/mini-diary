@@ -17,6 +17,7 @@ export interface StateProps {
 
 export interface DispatchProps {
 	setDateSelected: (date: Moment) => void;
+	selectEntry: (id: string) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -27,6 +28,7 @@ export default class Calendar extends PureComponent<Props, {}> {
 
 		// Function bindings
 		this.onDateSelection = this.onDateSelection.bind(this);
+		this.onEntrySelection = this.onEntrySelection.bind(this);
 	}
 
 	onDateSelection(date: Date): void {
@@ -37,6 +39,11 @@ export default class Calendar extends PureComponent<Props, {}> {
 		if (allowFutureEntries || parseDate(date).isSameOrBefore(today, "day")) {
 			setDateSelected(parsedDate);
 		}
+	}
+
+	onEntrySelection(id: string): void {
+		const { selectEntry } = this.props;
+		selectEntry(id)
 	}
 
 	render(): ReactNode {
@@ -54,7 +61,8 @@ export default class Calendar extends PureComponent<Props, {}> {
 		const todayObj = today.toDate();
 
 		return (
-			<DayPicker
+			<div>
+				<DayPicker
 				month={dateSelectedObj}
 				selectedDays={dateSelectedObj}
 				disabledDays={allowFutureEntries ? null : { after: todayObj }}
@@ -65,7 +73,14 @@ export default class Calendar extends PureComponent<Props, {}> {
 				localeUtils={MomentLocaleUtils}
 				navbarElement={<CalendarNavContainer />}
 				onDayClick={this.onDateSelection}
-			/>
+				/>
+				<ul>
+				{
+					entries[toIndexDate(dateSelected)] && 
+						entries[toIndexDate(dateSelected)].map(e => <li onClick={() => this.onEntrySelection(e.id)}>{e.id} {e.title}</li>)
+				}
+				</ul>
+			</div>
 		);
 	}
 }
