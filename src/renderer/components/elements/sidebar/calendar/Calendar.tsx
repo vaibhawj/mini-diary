@@ -5,6 +5,7 @@ import MomentLocaleUtils from "react-day-picker/moment";
 
 import { Entries, Weekday } from "../../../../types";
 import { createDate, parseDate, toIndexDate } from "../../../../utils/dateFormat";
+import { translations } from "../../../../utils/i18n";
 import { lang } from "../../../../utils/i18n";
 import CalendarNavContainer from "../calendar-nav/CalendarNavContainer";
 
@@ -13,6 +14,7 @@ export interface StateProps {
 	dateSelected: Moment;
 	entries: Entries;
 	firstDayOfWeek: Weekday | null;
+	entryIdSelected: string;
 }
 
 export interface DispatchProps {
@@ -46,8 +48,10 @@ export default class Calendar extends PureComponent<Props, {}> {
 		selectEntry(id)
 	}
 
+	truncate = (title: string, maxLength: number = 23): string => title.length > maxLength ? `${title.substring(0, maxLength).trim()} ...` : title
+
 	render(): ReactNode {
-		const { allowFutureEntries, dateSelected, entries, firstDayOfWeek } = this.props;
+		const { allowFutureEntries, dateSelected, entries, firstDayOfWeek, entryIdSelected } = this.props;
 
 		const today = createDate();
 		const daysWithEntries = Object.keys(entries);
@@ -58,10 +62,11 @@ export default class Calendar extends PureComponent<Props, {}> {
 		};
 
 		const dateSelectedObj = dateSelected.toDate();
+		const indexDate = toIndexDate(dateSelected);
 		const todayObj = today.toDate();
 
 		return (
-			<div>
+			<div className="sidebar">
 				<DayPicker
 				month={dateSelectedObj}
 				selectedDays={dateSelectedObj}
@@ -74,11 +79,25 @@ export default class Calendar extends PureComponent<Props, {}> {
 				navbarElement={<CalendarNavContainer />}
 				onDayClick={this.onDateSelection}
 				/>
-				<ul>
+				<ul className="day-entries">
 				{
-					entries[toIndexDate(dateSelected)] && 
-						entries[toIndexDate(dateSelected)].map(e => <li onClick={() => this.onEntrySelection(e.id)}>{e.id} {e.title}</li>)
+				entries[indexDate] &&
+					entries[indexDate].map(e => (
+						<li key={e.id} className="entry">
+							<button
+								type='button'
+								className={`button ${e.id === entryIdSelected ? 'button-main' : ''}`}
+								onClick={(): void => this.onEntrySelection(e.id)}
+							>
+								<p className={`entry-title ${!e.title ? 'text-faded' : ''}`}>
+									{
+									this.truncate(e.title) || translations['no-title']}
+								</p>
+							</button>
+						</li>
+					))
 				}
+
 				</ul>
 			</div>
 		);

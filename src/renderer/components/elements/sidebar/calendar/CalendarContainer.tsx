@@ -11,6 +11,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 	dateSelected: state.diary.dateSelected,
 	firstDayOfWeek: state.app.firstDayOfWeek,
 	entries: state.file.entries,
+	entryIdSelected: state.diary.entryIdSelected
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatchT): DispatchProps => ({
