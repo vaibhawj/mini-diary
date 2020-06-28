@@ -302,7 +302,6 @@ export const updateEntry = (entryDate: string, title: string, text: string, id: 
  * Merge the provided diary JSON with the one in the Redux state. For each entry, use the new one if
  * none exists yet. Otherwise, append the new title and text to the existing ones
  */
-// TODO test this
 export const mergeUpdateFile = (newEntries: Entries): ThunkActionT => (
 	dispatch,
 	getState,
@@ -310,14 +309,14 @@ export const mergeUpdateFile = (newEntries: Entries): ThunkActionT => (
 	const { entries, hashedPassword } = getState().file;
 	const entriesUpdated = { ...entries };
 
-	Object.entries(newEntries).forEach(([indexDate, newEntry]): void => {
+	Object.entries(newEntries).forEach(([indexDate, newEntriesOfTheDay]): void => {
 		if (indexDate in entriesUpdated) {
 			// Entry exists -> merge
-			const oldEntry = entriesUpdated[indexDate];
-			// entriesUpdated[indexDate] = mergeEntries(oldEntry, newEntry);
+			const oldEntries = entriesUpdated[indexDate];
+			entriesUpdated[indexDate] = mergeEntries(oldEntries, newEntriesOfTheDay);
 		} else {
 			// Entry does not exist yet -> add
-			entriesUpdated[indexDate] = newEntry;
+			entriesUpdated[indexDate] = newEntriesOfTheDay;
 		}
 	});
 	dispatch(writeEntriesEncrypted(entriesUpdated, hashedPassword));
