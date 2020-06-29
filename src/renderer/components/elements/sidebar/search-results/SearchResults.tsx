@@ -2,7 +2,7 @@ import { Moment } from "moment-timezone";
 import React, { PureComponent, ReactNode } from "react";
 
 import { Entries } from "../../../../types";
-import { fromIndexDate, toDateString } from "../../../../utils/dateFormat";
+import { fromIndexDate } from "../../../../utils/dateFormat";
 import { translations } from "../../../../utils/i18n";
 import { SearchResult } from "../../../../utils/searchIndex";
 import Banner from "../../general/banner/Banner";
@@ -10,7 +10,7 @@ import Banner from "../../general/banner/Banner";
 export interface StateProps {
 	entries: Entries;
 	searchResults: SearchResult[];
-	entryIdSelected: string
+	entryIdSelected: string | null
 }
 
 export interface DispatchProps {

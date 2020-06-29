@@ -14,7 +14,7 @@ export interface StateProps {
 	dateSelected: Moment;
 	entries: Entries;
 	firstDayOfWeek: Weekday | null;
-	entryIdSelected: string;
+	entryIdSelected: string | null;
 }
 
 export interface DispatchProps {

@@ -40,7 +40,7 @@ export interface StateProps {
 }
 
 export interface DispatchProps {
-	updateEntry: (entryDate: string, title: string, text: string, id: string | null) => void;
+	updateEntry: (entryDate: string, title: string, text: string, id: string) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -155,7 +155,9 @@ export default class Editor extends PureComponent<Props, State> {
 		const indexDate = toIndexDate(dateSelected);
 		const title = titleEditorState.getCurrentContent().getPlainText();
 		const text = draftToMarkdown(convertToRaw(textEditorState.getCurrentContent()));
-		updateEntry(indexDate, title.trim(), text.trim(), entryIdSelected);
+		if (entryIdSelected) {
+			updateEntry(indexDate, title.trim(), text.trim(), entryIdSelected);
+		}
 	};
 
 	// eslint-disable-next-line react/sort-comp

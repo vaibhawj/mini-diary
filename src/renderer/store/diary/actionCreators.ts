@@ -2,7 +2,7 @@ import { Moment } from "moment-timezone";
 
 import { MAX_DATE, MIN_DATE } from "../../constants";
 import { createDate, parseDate } from "../../utils/dateFormat";
-import { searchIndex } from "../../utils/searchIndex";
+import { searchIndex, SearchResult } from "../../utils/searchIndex";
 import { ThunkActionT } from "../store";
 import {
 	SET_DATE_SELECTED,
@@ -51,7 +51,7 @@ function setSearchKey(searchKey: string): SetSearchKeyAction {
 	};
 }
 
-function setSearchResults(searchResults: string[]): SetSearchResultsAction {
+function setSearchResults(searchResults: SearchResult[]): SetSearchResultsAction {
 	return {
 		type: SET_SEARCH_RESULTS,
 		payload: {

@@ -12,7 +12,6 @@ export default function buildEntries(
 	const entriesToImport: Entries = {};
 
 	parsedEntries.forEach((parsedEntry: ImportEntry): void => {
-		// Get date, title and text from entry
 		const { indexDate, entry: entryNew } = getContent(parsedEntry);
 
 		if (indexDate in entriesToImport) {
